@@ -1,0 +1,90 @@
+mql5
+//+------------------------------------------------------------------+
+//|                            Advanced SR                           |
+//|                Developer's Site: forexroboteasy.com              |
+//|                 Developer's Name: Forex Robot Easy Team          |
+//+------------------------------------------------------------------+
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+#include <Technical\MovingAverages.mqh>
+
+// Define constants
+#define PROFIT_TARGET 100
+#define STOP_LOSS 50
+#define TRADE_VOLUME 0.1
+
+// Initialize trade object
+CTrade trade;
+
+//+------------------------------------------------------------------+
+//|                    OnTick Event Handler                          |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+   // Get current market trend
+   double trend = GetMarketTrend();
+
+   // Check if market is trending upwards
+   if (trend > 0)
+   {
+      // Check if support level is broken
+      if (IsSupportLevelBroken())
+      {
+         // Open a buy trade at the current market price
+         trade.Buy(TRADE_VOLUME);
+      }
+   }
+
+   // Check if market is trending downwards
+   else if (trend < 0)
+   {
+      // Check if resistance level is broken
+      if (IsResistanceLevelBroken())
+      {
+         // Open a sell trade at the current market price
+         trade.Sell(TRADE_VOLUME);
+      }
+   }
+
+   // Check if any open trades need to be closed
+   if (trade.PositionsTotal() > 0)
+   {
+      // Check if profit target or stop loss is hit
+      if (trade.PositionGetDouble(POSITION_PROFIT) >= PROFIT_TARGET || trade.PositionGetDouble(POSITION_PROFIT) <= -STOP_LOSS)
+      {
+         // Close all open trades
+         trade.PositionCloseAll();
+      }
+   }
+}
+
+//+------------------------------------------------------------------+
+//|              GetMarketTrend Function                             |
+//+------------------------------------------------------------------+
+double GetMarketTrend()
+{
+   // TODO: Implement market trend analysis based on support and resistance levels and trend direction
+   double trend = 0;
+   return trend;
+}
+
+//+------------------------------------------------------------------+
+//|           IsSupportLevelBroken Function                          |
+//+------------------------------------------------------------------+
+bool IsSupportLevelBroken()
+{
+   // TODO: Implement logic to check if support level is broken
+   bool isBroken = false;
+   return isBroken;
+}
+
+//+------------------------------------------------------------------+
+//|          IsResistanceLevelBroken Function                        |
+//+------------------------------------------------------------------+
+bool IsResistanceLevelBroken()
+{
+   // TODO: Implement logic to check if resistance level is broken
+   bool isBroken = false;
+   return isBroken;
+}
